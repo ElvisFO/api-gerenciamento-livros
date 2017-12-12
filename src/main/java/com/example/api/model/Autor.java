@@ -34,7 +34,6 @@ public class Autor implements Serializable{
 	@NotNull
 	@Size(min=3, max=200)
 	private String nome;
-	private String idade;
 	
 	@Column(name="data_nascimento")
 	private LocalDate dataNascimento;
@@ -51,7 +50,6 @@ public class Autor implements Serializable{
 		super();
 		this.cpf = cpf;
 		this.nome = nome;
-		this.idade = idade;
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -77,14 +75,6 @@ public class Autor implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getIdade() {
-		return idade;
-	}
-
-	public void setIdade(String idade) {
-		this.idade = idade;
 	}
 
 	public LocalDate getDataNascimento() {

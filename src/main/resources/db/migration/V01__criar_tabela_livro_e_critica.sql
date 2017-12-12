@@ -7,7 +7,7 @@ CREATE TABLE livro (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE critica (
-	livro_isbn BIGINT(13) PRIMARY KEY,
+	livro_isbn BIGINT(13) NOT NULL,
 	criticas VARCHAR(200) NULL,
 	FOREIGN KEY (livro_isbn) REFERENCES livro(isbn)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
