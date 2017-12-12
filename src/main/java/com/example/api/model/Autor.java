@@ -2,11 +2,15 @@ package com.example.api.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -34,6 +38,9 @@ public class Autor implements Serializable{
 	
 	@Column(name="data_nascimento")
 	private LocalDate dataNascimento;
+	
+	@ManyToMany(mappedBy="autores")
+	private List<Livro> livros = new ArrayList<>();
 	
 	
 	public Autor() {
@@ -86,6 +93,14 @@ public class Autor implements Serializable{
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+	
+	public List<Livro> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(List<Livro> livros) {
+		this.livros = livros;
 	}
 
 	@Override

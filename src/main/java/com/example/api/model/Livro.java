@@ -11,6 +11,9 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,6 +44,12 @@ public class Livro implements Serializable{
 	@ElementCollection
 	@CollectionTable(name="critica")
 	private List<String> criticas = new ArrayList<>();
+	
+	@ManyToMany
+	@JoinTable(name="livro_autor", 
+		joinColumns = @JoinColumn(name="livro_id"),
+		inverseJoinColumns = @JoinColumn(name="autor_id"))
+	private List<Autor> autores = new ArrayList<>();
 	
 	public Livro() {
 		super();
@@ -101,6 +110,14 @@ public class Livro implements Serializable{
 
 	public void setCriticas(List<String> criticas) {
 		this.criticas = criticas;
+	}
+	
+	public List<Autor> getAutores() {
+		return autores;
+	}
+
+	public void setAutores(List<Autor> autores) {
+		this.autores = autores;
 	}
 
 	@Override
