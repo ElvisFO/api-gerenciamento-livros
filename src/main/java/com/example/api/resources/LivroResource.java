@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.api.event.RecursoCriadoEvent;
 import com.example.api.model.Livro;
 import com.example.api.repository.LivroRepository;
 
@@ -24,6 +26,9 @@ public class LivroResource {
 	
 	@Autowired
 	private LivroRepository livroRepository;
+	
+	@Autowired
+	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
 	public List<Livro> findAll()
@@ -42,6 +47,7 @@ public class LivroResource {
 	public ResponseEntity<?> save(@Valid @RequestBody Livro livro, HttpServletResponse response)
 	{
 		Livro livroSalvo = livroRepository.save(livro);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, livro.getIsbn()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(livroSalvo);
 	}
 
