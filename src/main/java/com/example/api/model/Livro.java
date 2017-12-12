@@ -36,6 +36,7 @@ public class Livro implements Serializable{
 	private String editora;
 	
 	@Column(name="data_publicacao")
+	@NotNull
 	private LocalDate dataDePublicacao;
 	
 	@NotNull
