@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="autor")
 public class Autor implements Serializable{
@@ -38,6 +40,7 @@ public class Autor implements Serializable{
 	@Column(name="data_nascimento")
 	private LocalDate dataNascimento;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy="autores")
 	private List<Livro> livros = new ArrayList<>();
 	

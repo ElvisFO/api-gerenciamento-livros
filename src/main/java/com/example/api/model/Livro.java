@@ -47,7 +47,7 @@ public class Livro implements Serializable{
 	
 	@ManyToMany
 	@JoinTable(name="livro_autor", 
-		joinColumns = @JoinColumn(name="livro_id"),
+		joinColumns = @JoinColumn(name="livro_isbn"),
 		inverseJoinColumns = @JoinColumn(name="autor_id"))
 	private List<Autor> autores = new ArrayList<>();
 	
