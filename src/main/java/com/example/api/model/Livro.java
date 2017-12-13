@@ -25,6 +25,7 @@ public class Livro implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@NotNull
 	private Long isbn;
 	
 	@NotNull
@@ -46,6 +47,7 @@ public class Livro implements Serializable{
 	@CollectionTable(name="critica")
 	private List<String> criticas = new ArrayList<>();
 	
+	@Size(min=1, message="Autor(es) do livro é obrigatório")
 	@ManyToMany
 	@JoinTable(name="livro_autor", 
 		joinColumns = @JoinColumn(name="livro_isbn"),
