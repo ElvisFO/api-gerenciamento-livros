@@ -13,43 +13,45 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.api.dto.LivroDTO;
 import com.example.api.event.RecursoCriadoEvent;
 import com.example.api.model.Livro;
-import com.example.api.repository.LivroRepository;
+import com.example.api.service.LivroService;
 
 @RestController
 @RequestMapping("/livros")
 public class LivroResource {
 	
 	@Autowired
-	private LivroRepository livroRepository;
+	private ApplicationEventPublisher publisher;
 	
 	@Autowired
-	private ApplicationEventPublisher publisher;
+	private LivroService livroService;
 	
 	@GetMapping
 	public List<Livro> findAll()
 	{
-		return livroRepository.findAll();
+		return livroService.findAll();
 	}
 	
 	@GetMapping("/{isbn}")
 	public ResponseEntity<?> findOne(@PathVariable Long isbn) 
 	{
-		Livro livro = livroRepository.findOne(isbn);
+		Livro livro = livroService.findOne(isbn);
 		return livro != null ? ResponseEntity.ok(livro) : ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
 	public ResponseEntity<?> save(@Valid @RequestBody Livro livro, HttpServletResponse response)
 	{
-		Livro livroSalvo = livroRepository.save(livro);
+		Livro livroSalvo = livroService.save(livro);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, livro.getIsbn()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(livroSalvo);
 	}
@@ -58,14 +60,21 @@ public class LivroResource {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long isbn)
 	{
-		livroRepository.delete(isbn);
+		livroService.delete(isbn);
 	}
 	
 	@GetMapping("/page")
 	public ResponseEntity<?> searchByAutor(@RequestParam(value="nome", defaultValue="") String nome)
 	{
-		List<Livro> livros = livroRepository.searchByAuthor(nome);
+		List<Livro> livros = livroService.searchByAuthor(nome);
 		return ResponseEntity.ok(livros);
+	}
+	
+	@PutMapping("/{isbn}")
+	public ResponseEntity<Livro> update(@PathVariable Long isbn, @Valid @RequestBody LivroDTO livro)
+	{
+		Livro livroSalvo = livroService.update(isbn, livro);
+		return ResponseEntity.ok(livroSalvo);
 	}
 
 }
