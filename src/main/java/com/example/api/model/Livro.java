@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.example.api.conversor.CurrencyWriter;
+
 @Entity
 @Table(name="livro")
 public class Livro implements Serializable{
@@ -105,6 +107,14 @@ public class Livro implements Serializable{
 
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
+	}
+	
+	public String getPrecoPorExtenso()
+	{
+		String precoPorExtenso = "";
+		CurrencyWriter cw = CurrencyWriter.getInstance();
+		precoPorExtenso = cw.write(preco);
+		return precoPorExtenso;
 	}
 
 	public List<String> getCriticas() {
