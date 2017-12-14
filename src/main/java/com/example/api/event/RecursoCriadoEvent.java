@@ -9,9 +9,9 @@ public class RecursoCriadoEvent extends ApplicationEvent{
 	private static final long serialVersionUID = 1L;
 	
 	private HttpServletResponse response;
-	private Long isbn;
+	private String isbn;
 
-	public RecursoCriadoEvent(Object source, HttpServletResponse response, Long isbn) {
+	public RecursoCriadoEvent(Object source, HttpServletResponse response, String isbn) {
 		super(source);
 		this.response = response;
 		this.isbn = isbn;
@@ -21,7 +21,7 @@ public class RecursoCriadoEvent extends ApplicationEvent{
 		return response;
 	}
 
-	public Long getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
 

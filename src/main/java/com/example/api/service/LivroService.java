@@ -21,14 +21,14 @@ public class LivroService {
 		return livroRepository.save(livro);
 	}
 
-	public Livro update(Long isbn, LivroDTO livroDTO)
+	public Livro update(String isbn, LivroDTO livroDTO)
 	{
 		Livro livroSalvo = livroRepository.findOne(isbn);
 		if(livroSalvo == null) {
 			throw new EmptyResultDataAccessException(1);
 		}
 		
-		this.fromDTO(livroSalvo, livroDTO);
+		this.updateData(livroSalvo, livroDTO);
 		return livroRepository.save(livroSalvo);
 	}
 	
@@ -38,12 +38,12 @@ public class LivroService {
 		return livros;
 	}
 	
-	public void delete(Long isbn) 
+	public void delete(String isbn) 
 	{
 		livroRepository.delete(isbn);
 	}
 	
-	public Livro findOne (Long isbn)
+	public Livro findOne (String isbn)
 	{
 		return livroRepository.findOne(isbn);
 	}
@@ -53,7 +53,7 @@ public class LivroService {
 		return livroRepository.findAll();
 	}
 	
-	private void fromDTO(Livro livro, LivroDTO livroDTO)
+	private void updateData(Livro livro, LivroDTO livroDTO)
 	{
 		livro.setTitulo(livroDTO.getTitulo());
 		livro.setEditora(livroDTO.getEditora());

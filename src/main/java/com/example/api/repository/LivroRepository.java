@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.example.api.model.Livro;
 
-public interface LivroRepository extends JpaRepository<Livro, Long> {
+public interface LivroRepository extends JpaRepository<Livro, String> {
 
 	@Query(nativeQuery=true, value="SELECT * FROM livro l inner " + 
 			"join livro_autor la on l.isbn = la.livro_isbn " + 

@@ -16,12 +16,12 @@ public class RecursoCriadoListener implements ApplicationListener<RecursoCriadoE
 	@Override
 	public void onApplicationEvent(RecursoCriadoEvent recursoCriadoEvent) {
 		HttpServletResponse response = recursoCriadoEvent.getResponse();
-		Long isbn = recursoCriadoEvent.getIsbn();
+		String isbn = recursoCriadoEvent.getIsbn();
 		
 		adicionarHeaderLocation(response, isbn);
 	}
 
-	private void adicionarHeaderLocation(HttpServletResponse response, Long isbn) {
+	private void adicionarHeaderLocation(HttpServletResponse response, String isbn) {
 		URI uri =  ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{isbn}")
 				.buildAndExpand(isbn).toUri();
 		response.setHeader("Location", uri.toASCIIString());

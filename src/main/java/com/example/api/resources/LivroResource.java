@@ -42,7 +42,7 @@ public class LivroResource {
 	}
 	
 	@GetMapping("/{isbn}")
-	public ResponseEntity<?> findOne(@PathVariable Long isbn) 
+	public ResponseEntity<?> findOne(@PathVariable String isbn) 
 	{
 		Livro livro = livroService.findOne(isbn);
 		return livro != null ? ResponseEntity.ok(livro) : ResponseEntity.notFound().build();
@@ -58,7 +58,7 @@ public class LivroResource {
 	
 	@DeleteMapping("/{isbn}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable Long isbn)
+	public void delete(@PathVariable String isbn)
 	{
 		livroService.delete(isbn);
 	}
@@ -71,7 +71,7 @@ public class LivroResource {
 	}
 	
 	@PutMapping("/{isbn}")
-	public ResponseEntity<Livro> update(@PathVariable Long isbn, @Valid @RequestBody LivroDTO livro)
+	public ResponseEntity<Livro> update(@PathVariable String isbn, @Valid @RequestBody LivroDTO livro)
 	{
 		Livro livroSalvo = livroService.update(isbn, livro);
 		return ResponseEntity.ok(livroSalvo);

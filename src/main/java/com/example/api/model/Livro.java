@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.util.StringUtils;
+
 import com.example.api.conversor.CurrencyWriter;
 
 @Entity
@@ -28,7 +30,8 @@ public class Livro implements Serializable{
 	
 	@Id
 	@NotNull
-	private Long isbn;
+	@Size(min=10, max=13)
+	private String isbn;
 	
 	@NotNull
 	@Size(min=3, max=200)
@@ -60,7 +63,7 @@ public class Livro implements Serializable{
 		super();
 	}
 
-	public Livro(Long isbn, String titulo, String editora, LocalDate dataDePublicacao, BigDecimal preco) {
+	public Livro(String isbn, String titulo, String editora, LocalDate dataDePublicacao, BigDecimal preco) {
 		super();
 		this.isbn = isbn;
 		this.titulo = titulo;
@@ -69,11 +72,11 @@ public class Livro implements Serializable{
 		this.preco = preco;
 	}
 
-	public Long getIsbn() {
+	public String getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(Long isbn) {
+	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 
@@ -114,6 +117,7 @@ public class Livro implements Serializable{
 		String precoPorExtenso = "";
 		CurrencyWriter cw = CurrencyWriter.getInstance();
 		precoPorExtenso = cw.write(preco);
+		precoPorExtenso = StringUtils.capitalize(precoPorExtenso);
 		return precoPorExtenso;
 	}
 
